@@ -4,10 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
+
+    <style>
+
+    body {
+  background-color: black;
+ 
+}
+
+.carrossel {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%;
+    transition: opacity 0.5s ease;
+}
+
+img {
+    width: 100%;
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+
+h1 {
+  color: red;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Altura total da tela */
+  margin: 0;
+}
+
+h1:hover {
+            transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+        }
+
+#para{
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+  border-style: dotted;
+  border-width: thick;
+  border-color: red;
+}
+
+p{
+  font-family: verdana;
+  font-size: 20px;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+
+}
+
+    </style>
+
+    
 </head>
 <body>
-    <h1>Página Inicial</h1>
-    <p>Para acessar o formulário, clique <a href="formulariokwami.html">aqui</a></p>
-    <p>Para ver os kwamis pesquisados, clique <a href="ver_kwami">aqui</a></p>
+    <div class="carrossel">
+        <div class="slides">
+            <div class="slide active">
+                <img src="kwami3.png" alt="Imagem 1">
+            </div>
+            <div class="slide">
+                <img src="kwami2.png" alt="Imagem 2">
+            </div>
+            <div class="slide">
+                <img src="kwamidb/kwami3.jpg" alt="Imagem 3">
+            </div>
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </div> 
+
+    
+    
+    <h1 ><i>Busque seu Kwami</i></h1>
+    <p id="para"><i>Kwamis são seres divinos que são formados sempre que uma nova ideia abstrata ou emoção surge no universo, como criação, amor, beleza e matemática.Os Kwamis habitam nas peças das joias dos Miraculous, como brincos ou um anel, a fim de dar a pessoa vestindo-lhes a capacidade de se transformar em super-heróis e ganhar um poder específico, como Plagg conceder o poder da destruição e Tikki o poder da criação. A transformação pode durar indefinidamente a menos que o poder especial do Miraculous (por exemplo o Talismã de Ladybug e o Cataclismo de Cat Noir) é usado, e a altura em que o use tem cerca de cinco minutos até que se reverta à sua forma normal e deixa o Kwami do Miraculous, a menos que a pessoa já seja adulta, o que é um privilégio somente dos adultos não se transformar por horas ou até mesmo dias. Para recuperar o poder, o Kwami precisa reabastecer pela ingestão de alimentos, mas, se o portador não alimentar os Kwamis, a energia que será usada para eles usarem o poder novamente, é a do portador, como provado em Evolução.</i></p>
+    <p><i>Para acessar o formulário, clique <a href="formulariokwami.html">aqui</a></i></p>
+    <p><i>Para ver os kwamis pesquisados, clique <a href="ver_kwami">aqui</a></i></p>
+
+    <script>
+        let currentIndex = 0;
+
+function showSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    if (index >= slides.length) currentIndex = 0;
+    if (index < 0) currentIndex = slides.length - 1;
+
+    slides.forEach((slide, i) => {
+        slide.style.transform = `translateX(${-currentIndex * 100}%)`;
+    });
+}
+
+function changeSlide(direction) {
+    currentIndex += direction;
+    showSlide(currentIndex);
+}
+
+// Iniciar o carrossel
+//showSlide(currentIndex);
+    </script>
+
 </body>
 </html>

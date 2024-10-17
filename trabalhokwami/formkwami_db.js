@@ -31,7 +31,7 @@ http.createServer(function (req, res) {
       let nome = q.query.nome;
       let animal = q.query.animal;
       let conceito = q.query.conceito;
-      let db = new sqlite3.Database('./db/banco.db', (err) => {
+      let db = new sqlite3.Database('./kwamidb/banco.db', (err) => {
         if (err) {
           return console.error(err.message);
         }
@@ -60,8 +60,15 @@ http.createServer(function (req, res) {
     }
     else if(nomearquivo == "./ver_kwami"){
       res.writeHead(200, {'Content-Type': 'text/html'});
-      res.write("<html><head><meta charset='UTF-8'><title>Usuários</title></head><body>");
-      res.write("<h1>Usuários Cadastrados</h1>");
+      res.write("<html><head><meta charset='UTF-8'><title>Usuários</title>");
+      res.write("<style>");
+      res.write("body{background-color:black;}");
+      res.write("table{color:white;border-collapse: collapse; margin: 20px 0;}");
+      res.write("th,td{color:white;padding: 12px;text-align: left;border-bottom: 1px solid #ddd;}");
+      res.write("h1{color:red;}");
+      res.write("</style>");
+      res.write("</head><body>");
+      res.write("<h1><i>Kwamis Cadastrados</i></h1>");
 
       let db = new sqlite3.Database('./kwamidb/banco.db', (err) => {
         if (err) {
@@ -101,7 +108,38 @@ http.createServer(function (req, res) {
         console.log('Fechou a conexão com o banco de dados!');
       });
     }
+    else if (nomearquivo.endsWith('.png') || nomearquivo.endsWith('.jpg')) {
+      retorno_imagem(res,nomearquivo)
+    }
+    else if (nomearquivo.endsWith('.css')) {
+      css(res,nomearquivo)
+    }
 }).listen(8080, () => {
     console.log("O servidor foi iniciado na porta 8080");
 });
+
+function serveFile(res, filePath, contentType) {
+  fs.readFile(filePath, (err, content) => {
+      if (err) {
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          res.end('Erro ao carregar o arquivo.');
+      } else {
+          res.writeHead(200, { 'Content-Type': contentType });
+          res.end(content, 'utf-8');
+      }
+  });
+}
+function retorno_imagem(res,nomearquivo){
+  serveFile(res,`${nomearquivo}`,'image/jpeg',function (err, data){
+    return data
+  });
+}
+function css(res,nomearquivo){
+  serveFile(res,`${nomearquivo}`,'text/css',function (err, data){
+    if(err){
+      console.log(err)
+    }
+    return data
+  });
+}
 
